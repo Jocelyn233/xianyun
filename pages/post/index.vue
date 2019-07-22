@@ -1,69 +1,48 @@
 <template>
-  <div style="padding:50px;">
-     <h1 style="margin-bottom:50px;">组件递归</h1>
-
-    <NavsItem :data="navs"/>
-
+  <div>
+    <!-- 版芯部分 -->
+    <div class="container">
+      <el-row type="flex" justify="space-between" class="el-row">
+        <div class="left">
+          <!-- 左侧搜索栏 -->
+          <LeftSearch />
+          <!-- 推荐城市 -->
+          <RecommendCity />
+        </div>
+        <div class="right">
+          <!-- 右侧搜索框 -->
+          <RightSearch />
+          <!-- 右侧显示内容部分 -->
+          <RightContent />
+        </div>
+      </el-row>
+    </div>
   </div>
 </template>
 
 <script>
-
-import NavsItem from "@/components/post/navsItem";
+// 引入各组件
+import LeftSearch from "@/components/post/leftSearch";
+import RightSearch from "@/components/post/rightSearch";
+import RecommendCity from "@/components/post/recommendCity";
+import RightContent from "@/components/post/rightContent";
 
 export default {
-    components: {
-        NavsItem,
-    },
-    data(){
-        return {
-            navs: [
-                {
-                    title: "衣服",
-                    children: [
-                        { 
-                            title: "男装",
-                            children: [
-                                { 
-                                    title: "T恤",
-                                    children: [ 
-                                        {title: "短袖"}, 
-                                        { title: "长袖" }
-                                     ]
-                                }
-                            ]
-                        },
-                        { 
-                            title: "女装",
-                            children: [
-                                {
-                                    title: "裙子",
-                                    children: [
-                                        { title: "连衣裙" },
-                                        { title: "短裙" }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    title: "电器",
-                    children: [
-                        { title: "电视", children: [
-                            { title: "液晶电视" },
-                            { title: "普通电视"}
-                        ] },
-                        { title: "冰箱" },
-                        { title: "空调" },
-                    ]
-                }
-            ]
-        }
-    }
-}
+  // 注册组件
+  components: {
+    LeftSearch,
+    RightSearch,
+    RecommendCity,
+    RightContent
+  }
+};
 </script>
 
-<style>
-
+<style lang="less" scoped>
+.container {
+  width: 1000px;
+  //   height: 1000px;
+  padding-top: 20px;
+  margin: 0 auto;
+}
 </style>
