@@ -1,26 +1,41 @@
 <template>
   <div>
     <h4>
-      得月楼饭店
+      {{data.name}}
       <i class="iconfont iconhuangguan"></i>
       <i class="iconfont iconhuangguan"></i>
       <i class="iconfont iconhuangguan"></i>
       <i class="iconfont iconhuangguan"></i>
       <i class="iconfont iconhuangguan"></i>
     </h4>
-    <span>de yue lou hotel</span><br>
-    <span><i data-v-3cab31ba="" class="iconfont iconlocation"></i>柘宁东路9号 </span>
+    <span>{{data.alias}}</span>
+    <br />
+    <span>
+      <i data-v-3cab31ba class="iconfont iconlocation"></i>{{data.address}}
+    </span>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {};
+  },
+  props: {
+    data: {
+      type: Object,
+      default: {
+        seat_infos: {}
+      }
+    }
+  },
+};
 </script>
 
 <style lang="less" scoped>
 div {
   > h4 {
-    font-size:24px;
+    font-size: 24px;
     i {
       color: orange;
       &:first-child {

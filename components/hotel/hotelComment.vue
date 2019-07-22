@@ -18,17 +18,56 @@
         </span>
       </div>
       <div class="grade">
-        <span><el-progress type="circle" show-text :width="70" :percentage="25"></el-progress></span>
-        <span><el-progress type="circle" show-text :width="70" :percentage="25">产品</el-progress></span>
-        <span><el-progress type="circle" show-text :width="70" :percentage="25">服务</el-progress></span>
+        <span>
+          <el-progress type="circle" show-text :width="70" :percentage="data.environment"></el-progress>
+        </span>
+        <i>
+          环境
+          <br />
+          {{data.environment/10}}分
+        </i>
+        <span>
+          <el-progress type="circle" show-text :width="70" :percentage="data.product"></el-progress>
+        </span>
+        <i>
+          产品
+          <br />
+          {{data.product/10}}分
+        </i>
+        <span>
+          <el-progress type="circle" show-text :width="70" :percentage="data.service"></el-progress>
+        </span>
+        <i>
+          服务
+          <br />
+          {{data.service/10}}分
+        </i>
       </div>
     </div>
-    <div class="comment-content"></div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  // data () {
+  //   return {
+  //    num:10,
+  //    num2:20,
+  //    num3:30
+  //   }
+  // },
+  props: {
+    data:{
+      type:Object,
+      default:{
+      } 
+    }
+
+  },
+  // watch: {
+  //   data:{}
+  // }
+};
 </script>
 
 <style lang="less" scoped>
@@ -37,7 +76,7 @@ h1 {
   margin-bottom: 20px;
 }
 .comment-info {
-   height: 64px;
+  height: 64px;
 
   .comment-num {
     float: left;
@@ -52,40 +91,61 @@ h1 {
     float: left;
     height: 100%;
     position: relative;
-    margin:0 50px;
+    margin: 0 50px;
 
-    >span {
+    > span {
       display: block;
-      margin-top:16%;
+      margin-top: 16%;
 
-      span{
-        color:orange;
+      span {
+        color: orange;
       }
 
-      em{
+      em {
         position: absolute;
         left: 0px;
-        top:0px;
-        border:2px solid #fa3;
+        top: 0px;
+        border: 2px solid #fa3;
         text-align: center;
         width: 70px;
         height: 70px;
         line-height: 70px;
         border-radius: 50%;
-        opacity: .35;
+        opacity: 0.35;
         transform: rotate(-30deg);
-        color:#fa3;
+        color: #fa3;
         font-size: 22px;
       }
     }
   }
-  
-  .grade{
+
+  .grade {
     float: left;
+    position: relative;
 
-
+    i {
+      text-align: center;
+      color: #fa3;
+    }
+    i:nth-child(2) {
+      position: absolute;
+      left: 15px;
+      top: 12px;
+      background-color: #fff;
+    }
+    i:nth-child(4) {
+      position: absolute;
+      left: 92px;
+      top: 12px;
+      background-color: #fff;
+    }
+    i:nth-child(6) {
+      position: absolute;
+      left: 168px;
+      top: 12px;
+      background-color: #fff;
+    }
   }
-
 }
 </style>
 

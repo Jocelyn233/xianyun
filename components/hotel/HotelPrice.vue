@@ -18,78 +18,45 @@
       </el-col>
     </el-row>
 
-    <el-row>
-      <el-col :span="8">
-        <div class="grid-content bg-purple">
-          <span>携程</span>
-        </div>
-      </el-col>
-      <el-col :span="8">
-        <div class="grid-content bg-purple-light">
-          <span>高级大床房A</span>
-        </div>
-      </el-col>
-      <el-col :span="8">
-        <div class="grid-content bg-purple">
-          <span>
-            ￥143起
-            <i data-v-3cab31ba class="el-icon-arrow-right height-light"></i>
-          </span>
-        </div>
-      </el-col>
-    </el-row>
+    <div class="roomPrice" v-for="(item,index) in data.products" :key="index">
+      <el-row>
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <span>{{item.name}}</span>
+          </div>
+        </el-col>
+        <el-col :span="8">
+          <div class="grid-content bg-purple-light">
+            <span>{{item.bestType}}</span>
+          </div>
+        </el-col>
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <span>
+              ￥{{item.price}}起
+              <i data-v-3cab31ba class="el-icon-arrow-right height-light"></i>
+            </span>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
 
-    <el-row>
-      <el-col :span="8">
-        <div class="grid-content bg-purple">
-          <span>携程</span>
-        </div>
-      </el-col>
-      <el-col :span="8">
-        <div class="grid-content bg-purple-light">
-          <span>高级大床房A</span>
-        </div>
-      </el-col>
-      <el-col :span="8">
-        <div class="grid-content bg-purple">
-          <span>
-            ￥143起
-            <i data-v-3cab31ba class="el-icon-arrow-right height-light"></i>
-          </span>
-        </div>
-      </el-col>
-    </el-row>
-
-    <el-row>
-      <el-col :span="8">
-        <div class="grid-content bg-purple">
-          <span>携程</span>
-        </div>
-      </el-col>
-      <el-col :span="8">
-        <div class="grid-content bg-purple-light">
-          <span>高级大床房A</span>
-        </div>
-      </el-col>
-      <el-col :span="8">
-        <div class="grid-content bg-purple">
-          <span>
-            ￥143起
-            <i data-v-3cab31ba class="el-icon-arrow-right height-light"></i>
-          </span>
-        </div>
-      </el-col>
-    </el-row>
   </div>
 </template>
 
 <script>
 export default {
   data() {
-    return {
-
-    };
+    return {};
   },
+  props: {
+    data: {
+      type: Object,
+      default: {
+        seat_infos: {}
+      }
+    }
+  }
 };
 </script>
 
