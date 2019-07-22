@@ -67,6 +67,7 @@ export default {
     font-size: 15px;
     //   background-color: cadetblue
     border-top: none;
+    position: static;
     &:hover {
       > span {
         color: #ffa500;
@@ -118,7 +119,7 @@ export default {
   .recommend-city {
     position: absolute;
     left: 256px;
-    top: -1px;
+    top: 0;
     z-index: 2;
   }
 }

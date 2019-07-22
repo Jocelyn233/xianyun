@@ -35,21 +35,21 @@ export default {
     RecommendCity,
     RightContent
   },
-  mounted(){
-    // 请求文章列表
-    this.$axios({
-      url:'/posts',
-      params:{
-        city:'北京'
-      }
-    })
-    .then(res=>{
-      console.log(res);
-    })
-    .catch(err=>{
-      console.log(err);
-    })
-  }
+  // mounted(){
+  //   // 请求文章列表
+  //   this.$axios({
+  //     url:'/posts',
+  //     params:{
+  //       city:'北京'
+  //     }
+  //   })
+  //   .then(res=>{
+  //     console.log(res);
+  //   })
+  //   .catch(err=>{
+  //     console.log(err);
+  //   })
+  // }
 };
 </script>
 
