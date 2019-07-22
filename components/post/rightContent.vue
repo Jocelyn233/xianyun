@@ -3,7 +3,7 @@
     <el-row type="flex" justify="space-between" class="content-top">
       <div class="content-top-left">推荐攻略</div>
       <div>
-        <el-button type="primary">
+        <el-button @click="goCreatPage" type="primary">
           <i class="el-icon-edit"></i> 写游记
         </el-button>
       </div>
@@ -126,6 +126,10 @@ export default {
     // 点击获取用户信息
     getPersonInfo() {
       this.$message.success("个人中心暂未开放...");
+    },
+    // 跳转到编辑页面
+    goCreatPage(){
+      this.$router.push('/post/create')
     }
   },
   mounted() {
