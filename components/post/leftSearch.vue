@@ -1,49 +1,21 @@
 <template>
   <div>
     <div class="container">
-      <el-row type="flex" justify="space-between" class="searchItem">
-        <span>热门城市</span>
+      <el-row type="flex" justify="space-between" 
+      v-for="(item,index) in cityList"
+      :key="index"
+      class="searchItem">
+        <span>{{item.type}}</span>
         <span class="icon">></span>
         <!-- 显示的具体介绍部分 -->
         <el-row type="flex" justify="space-between" class="recommend-city">
-          <div>
-            <span class="num">1</span>
-            <span class="city">城市</span>
-            <span clas="description">介绍</span>
-          </div>
-          <div>
-            <span class="num">1</span>
-            <span class="city">城市</span>
-            <span clas="description">介绍</span>
-          </div>
-          <div>
-            <span class="num">1</span>
-            <span class="city">城市</span>
-            <span clas="description">介绍</span>
-          </div>
-          <div>
-            <span class="num">1</span>
-            <span class="city">城市</span>
-            <span clas="description">介绍</span>
-          </div>
-          <div>
-            <span class="num">1</span>
-            <span class="city">城市</span>
-            <span clas="description">介绍</span>
+          <div v-for="(v,i) in cityList[index].children"
+          :key="i">
+            <span class="num">{{i+1}}</span>
+            <span class="city">{{v.city}}</span>
+            <span clas="description">{{v.desc}}</span>
           </div>
         </el-row>
-      </el-row>
-      <el-row type="flex" justify="space-between" class="searchItem">
-        <span>热门城市</span>
-        <span class="icon">></span>
-      </el-row>
-      <el-row type="flex" justify="space-between" class="searchItem">
-        <span>热门城市</span>
-        <span class="icon">></span>
-      </el-row>
-      <el-row type="flex" justify="space-between" class="searchItem">
-        <span>热门城市</span>
-        <span class="icon">></span>
       </el-row>
     </div>
   </div>
@@ -52,10 +24,29 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      // 城市列表
+      cityList:[],
+      // 详细介绍
+      recommendCity:[]
+    };
   },
   methods: {},
-  mounted() {}
+  mounted() {
+    // 发送请求 获取城市菜单列表
+    this.$axios({
+      url: "/posts/cities"
+    })
+      .then(res => {
+        // console.log(res);
+        const { data } = res.data;
+        console.log(data);
+        this.cityList=data
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 };
 </script>
 
@@ -76,11 +67,11 @@ export default {
     border-top: none;
     position: relative;
     &:hover {
-      span{
-      color: #ffa500;
+      > span {
+        color: #ffa500;
       }
-      .recommend-city{
-         display: block;
+      .recommend-city {
+        display: block;
       }
     }
     .recommend-city {
@@ -108,10 +99,6 @@ export default {
           color: orange;
           padding-right: 6px;
         }
-        .description {
-          font-size: 15px;
-          color: #ccc;
-        }
       }
     }
     &:first-child {
@@ -122,5 +109,8 @@ export default {
       color: #9e9e9e;
     }
   }
+}
+.container .searchItem .recommend-city div[data-v-05f129f3] {
+  color: #999;
 }
 </style>
