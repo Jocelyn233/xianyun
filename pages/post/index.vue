@@ -34,7 +34,7 @@ export default {
     RightSearch,
     RecommendCity,
     RightContent
-  },
+  }
   // mounted(){
   //   // 请求文章列表
   //   this.$axios({
@@ -56,7 +56,7 @@ export default {
 <style lang="less" scoped>
 .container {
   width: 1000px;
-  //   height: 1000px;
+  // height: 430px;
   padding-top: 20px;
   margin: 0 auto;
 }
