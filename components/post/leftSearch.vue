@@ -14,7 +14,7 @@
         <el-row type="flex" justify="space-between" class="recommend-city">
           <div v-for="(v,i) in cityList[index].children" :key="i">
             <span class="num">{{i+1}}</span>
-            <span class="city">{{v.city}}</span>
+            <span @click="changKeyWord(v.city)" class="city">{{v.city}}</span>
             <span clas="description">{{v.desc}}</span>
           </div>
         </el-row>
@@ -33,7 +33,11 @@ export default {
       recommendCity: []
     };
   },
-  methods: {},
+  methods: {
+    changKeyWord(v){
+      this.$store.commit('post/setKeyWord',v)
+    }
+  },
   mounted() {
     // 发送请求 获取城市菜单列表
     this.$axios({
@@ -42,7 +46,7 @@ export default {
       .then(res => {
         // console.log(res);
         const { data } = res.data;
-        console.log(data);
+        // console.log(data);
         this.cityList = data;
       })
       .catch(err => {

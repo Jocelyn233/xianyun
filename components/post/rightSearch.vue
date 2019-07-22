@@ -26,7 +26,10 @@ export default {
   methods: {
     handleChangeWord(word) {
       this.keyword = word;
+      // 调用仓库的方法 请求数据
     }
+  },
+  mounted(){
   }
 };
 </script>
