@@ -161,7 +161,8 @@ export default {
                             value: v.name.replace("市", ""), 
                         }
                     });
-
+                     console.log(newData);
+                     
                     // 默认选中第一个
                     resolve(newData);
 
