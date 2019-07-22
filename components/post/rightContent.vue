@@ -10,7 +10,7 @@
     </el-row>
     <div class="content-bottom">
       <!-- 底部文章部分 -->
-      <div class="content-bottom-item1" v-for="(item,index) in dataList" :key="index">
+      <div class="content-bottom-item1" v-for="(item,index) in $store.state.post.dataList" :key="index">
         <!-- 当图片大于三张时显示的内容 -->
         <div v-show="item.images.length>=3">
           <nuxt-link :to="'/post/detail?id='+item.id" class="title">{{item.title}}</nuxt-link>
@@ -84,7 +84,7 @@
         :page-sizes="[3,5,10, 15]"
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
+        :total="$store.state.post.total"
       ></el-pagination>
     </div>
   </div>
@@ -97,19 +97,13 @@ export default {
       // 当前页码和分页的默认值
       currentPage: 1,
       pageSize: 3,
-      total: 0,
-      // 总的文章列表
-      articleList: [],
-      // 渲染到单个页面的列表
-      dataList: []
-      // 文章图片集合
-      // imgList: []
     };
   },
   methods: {
     handleSizeChange(val) {
       // console.log(`每页 ${val} 条`);
       this.pageSize=val
+      // 改变store中的数据
       this.dataList=this.articleList.slice(
               (this.currentPage - 1) * this.pageSize,
               this.pageSize * this.currentPage
@@ -139,20 +133,12 @@ export default {
     })
       .then(res => {
         // console.log(res);
-        const { data } = res.data;
+        const  data  = res.data;
         this.total = res.data.total;
-        this.articleList = data;
-        this.dataList =this.articleList.slice(0,3);
+        this.$store.commit('post/changeDataList', data)
+        // this.articleList = data;
+        // this.dataList =this.articleList.slice(0,3);
         // console.log(data);
-        // 遍历文章列表数据 如果图片长度大于3 则等于3 否则等于1
-        this.articleList.forEach((v,i)=>{
-            console.log(v);
-            if(v.images.length>=3){
-              v.images.length=3
-            }else{
-              v.images.length=1
-            }
-        });
       })
       .catch(err => {
         console.log(err);
