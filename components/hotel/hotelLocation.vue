@@ -2,13 +2,19 @@
   <el-row class="options">
     <el-row class="option-row">
       <el-col :span="4">区域:</el-col>
-      <el-col :span="20" class="locationInfos">
-        <div class="scenics-box">
+      <el-col :span="20" class="locationInfos" >
+        <div class="scenics-box"  :class="{'hidden-all':isHide===true}">
           <a href="javascript:;">全部</a>
+          <a
+            href="#"
+            v-for="(item,index) in data"
+            :key="index"
+            class="location-budget"
+          >{{item.name}}</a>
         </div>
-        <a href="javascript:;">
+        <a href="javascript:;" @click="scale">
           <i class="el-icon-d-arrow-right" style="color:orange;transform: rotate(90deg);"></i>
-          等43个地区
+          等{{!data.length?0:data.length}}个地区
         </a>
       </el-col>
     </el-row>
@@ -71,7 +77,24 @@
   </el-row>
 </template>
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      isHide: true
+    };
+  },
+  props: {
+    data: {
+      type: Array,
+      default: () => {}
+    }
+  },
+  methods: {
+    scale() {
+      this.isHide = !this.isHide;
+    }
+  }
+};
 </script>
 <style lang="less" scoped>
 .options {
@@ -82,6 +105,7 @@ export default {};
 
     .locationInfos {
       .scenics-box {
+       
         .location-budget {
           margin-right: 1em;
           padding: 0 2px;
@@ -110,5 +134,9 @@ export default {};
       color: orange;
     }
   }
+}
+.hidden-all {
+  overflow: hidden;
+  max-height: 4em;
 }
 </style>

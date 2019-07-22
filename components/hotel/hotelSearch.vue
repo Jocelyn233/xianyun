@@ -2,12 +2,14 @@
   <el-form :inline="true" class="demo-form-inline">
     <el-form-item>
       <el-autocomplete
-        v-model="form.city"
-        :fetch-suggestions="querySearchAsync"
-        placeholder="请输入内容"
+        :fetch-suggestions="queryDestSearch"
+        placeholder="请搜索城市"
         @select="handleSelect"
+        class="el-autocomplete"
+        v-model="form.city"
       ></el-autocomplete>
     </el-form-item>
+
     <el-form-item>
       <el-date-picker
         v-model="form.date"
@@ -89,7 +91,7 @@ export default {
         { value: "2儿童", label: "2" },
         { value: "3儿童", label: "3" }
       ],
-      adult: "1成少说刷人",
+      adult: "1成人",
       child: "value",
       form: {
         date: "",
@@ -99,13 +101,48 @@ export default {
     };
   },
   methods: {
-    querySearchAsync() {},
-    handleSelect() {},
+    async queryDestSearch(value, cb) {
+      const arr = await this.querySearchCity(value);
+      if (arr.length > 0) {
+        // 设置到达城市的第一个为默认值
+        this.form.destCity = arr[0].value;
+        cb(arr);
+      }
+    },
+    querySearchCity(queryString) {
+      return new Promise((resolve, reject) => {
+        // 如果是空就不发起请求
+        if (!queryString || !queryString.trim()) {
+          resolve([]);
+          return;
+        }
+
+        this.$axios({
+          url: "/cities",
+          params: {
+            name: queryString
+          }
+        }).then(res => {
+          const { data } = res.data;
+
+          // 添加一个value属性，值等于name没有市字
+          const newData = data.map(v => {
+            return {
+              ...v,
+              value: v.name
+            };
+          });
+          resolve(newData);
+        });
+      });
+    },
+
+    handleSelect(value) {
+       this.$emit('changeCity',value)
+    },
     onSubmit() {},
     handleAdule(item) {
       this.adult = item;
-      console.log(this.adult);
-      
     },
     handleChild(item) {
       this.child = item;

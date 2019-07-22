@@ -8,7 +8,7 @@
       </el-row>
       <el-row>
         <div class="block">
-          <el-slider v-model="value1" :max="4000"></el-slider>
+          <el-slider v-model="slider" @change='handleSlider'></el-slider>
         </div>
       </el-row>
     </el-col>
@@ -16,128 +16,74 @@
     <el-col :span="6" class="filter-col" style="padding:0 20px">
       <el-row class="filter-title">住宿等级</el-row>
       <el-row class="filter-wrapper">
-        <el-popover trigger="hover" style="width:100%; font-size:14px">
-          <el-row
-            type="flex"
-            justify="space-between"
-            align="middle"
-            style="border-bottom:1px solid #f5f5f5; padding:10px "
-          >
-            <div class="options">
-              <li v-for="(item,index) in options" :key="index">
-                <i class="iconfont iconcircle"></i>
-                {{item.label}}
-              </li>
-            </div>
-          </el-row>
-
-          <el-row slot="reference">
-            <span type="flex">
-              <el-col :span="20">
-                <span class="dropdown-link-text">1星</span>
-              </el-col>
-              <el-col :span="4">
-                <i class="el-icon-arrow-down el-icon--right"></i>
-              </el-col>
-            </span>
-          </el-row>
-        </el-popover>
+        <el-select
+          v-model="ranksValue"
+          clearable
+          @clear="handleRankEmpty"
+          collapse-tags
+          placeholder="不限"
+          @change="handleRank"
+        >
+          <el-option v-for="(item,index) in ranks" :key="index" :label="item.name" :value="item.id"></el-option>
+        </el-select>
       </el-row>
     </el-col>
     <!-- 住宿类型 -->
     <el-col :span="6" class="filter-col" style="padding:0 20px">
       <el-row class="filter-title">住宿类型</el-row>
       <el-row class="filter-wrapper">
-        <el-popover trigger="hover" style="width:100%; font-size:14px">
-          <el-row
-            type="flex"
-            justify="space-between"
-            align="middle"
-            style="border-bottom:1px solid #f5f5f5; padding:10px "
-          >
-            <div class="options">
-              <li v-for="(item,index) in options" :key="index">
-                <i class="iconfont iconcircle"></i>
-                {{item.label}}
-              </li>
-            </div>
-          </el-row>
-
-          <el-row slot="reference">
-            <span type="flex">
-              <el-col :span="20">
-                <span class="dropdown-link-text">1星</span>
-              </el-col>
-              <el-col :span="4">
-                <i class="el-icon-arrow-down el-icon--right"></i>
-              </el-col>
-            </span>
-          </el-row>
-        </el-popover>
+        <el-select
+          v-model="typesValue"
+          clearable
+          @clear="handleTypesEmpty"
+          collapse-tags
+          @change="handleTypes"
+          placeholder="不限"
+        >
+          <el-option v-for="(item,index) in types" :key="index" :label="item.name" :value="item.id"></el-option>
+        </el-select>
       </el-row>
     </el-col>
     <!-- 酒店设施 -->
     <el-col :span="6" class="filter-col" style="padding:0 20px">
       <el-row class="filter-title">酒店设施</el-row>
       <el-row class="filter-wrapper">
-        <el-popover trigger="hover" style="width:100%; font-size:14px">
-          <el-row
-            type="flex"
-            justify="space-between"
-            align="middle"
-            style="border-bottom:1px solid #f5f5f5; padding:10px "
-          >
-            <div class="options">
-              <li v-for="(item,index) in options" :key="index">
-                <i class="iconfont iconcircle"></i>
-                {{item.label}}
-              </li>
-            </div>
-          </el-row>
-
-          <el-row slot="reference">
-            <span type="flex">
-              <el-col :span="20">
-                <span class="dropdown-link-text">1星</span>
-              </el-col>
-              <el-col :span="4">
-                <i class="el-icon-arrow-down el-icon--right"></i>
-              </el-col>
-            </span>
-          </el-row>
-        </el-popover>
+        <el-select
+          v-model="facilityValue"
+          clearable
+          @clear="handleFacilitysEmpty"
+          collapse-tags
+          @change="handleFacilitys"
+          placeholder="不限"
+        >
+          <el-option
+            v-for="(item,index) in facilitys"
+            :key="index"
+            :label="item.name"
+            :value="item.id"
+          ></el-option>
+        </el-select>
       </el-row>
     </el-col>
     <!-- 酒店品牌 -->
     <el-col :span="6" class="filter-col" style="padding:0 20px">
       <el-row class="filter-title">酒店品牌</el-row>
       <el-row class="filter-wrapper">
-        <el-popover trigger="hover" style="width:100%; font-size:14px">
-          <el-row
-            type="flex"
-            justify="space-between"
-            align="middle"
-            style="border-bottom:1px solid #f5f5f5; padding:10px "
-          >
-            <div class="options">
-              <li v-for="(item,index) in options" :key="index">
-                <i class="iconfont iconcircle"></i>
-                {{item.label}}
-              </li>
-            </div>
-          </el-row>
-
-          <el-row slot="reference">
-            <span type="flex">
-              <el-col :span="20">
-                <span class="dropdown-link-text">1星</span>
-              </el-col>
-              <el-col :span="4">
-                <i class="el-icon-arrow-down el-icon--right"></i>
-              </el-col>
-            </span>
-          </el-row>
-        </el-popover>
+        <el-select
+          v-model="brandValue"
+          clearable
+          @clear="handleBrandsEmpty"
+          collapse-tags
+          @change="handleBrands"
+          placeholder="不限"
+        >
+          <el-option
+            v-for="(item,index) in brands"
+            :key="index"
+            :label="item.name"
+            :value="item.id"
+          ></el-option>
+        </el-select>
       </el-row>
     </el-col>
   </el-row>
@@ -146,32 +92,72 @@
 export default {
   data() {
     return {
-      options: [
-        {
-          value: "选项1",
-          label: "黄金糕"
-        },
-        {
-          value: "选项2",
-          label: "双皮奶"
-        },
-        {
-          value: "选项3",
-          label: "蚵仔煎"
-        },
-        {
-          value: "选项4",
-          label: "龙须面"
-        },
-        {
-          value: "选项5",
-          label: "北京烤鸭"
-        }
-      ],
+      ranks: [],
+      types: [],
+      facilitys: [],
+      brands: [],
       value: [],
       child: "",
-      value1: 4000
+      slider: 4000, //滑块
+      ranksValue: [],
+      typesValue: [],
+      facilityValue: [],
+      brandValue: []
     };
+  },
+  methods: {
+    //价格筛选
+    handleSlider(value) {
+      this.$emit("setDataList", { price_in: value });
+    },
+    //住宿等级
+    handleRank(value) {
+      this.$emit("setDataList", { hotellevel: value });
+    },
+    //清空住宿等级
+    handleRankEmpty(value) {
+      this.$emit("setDataList", {});
+    },
+    //住宿类型
+    handleTypes(value) {
+
+      this.$emit("setDataList", { hoteltype: value });
+    },
+    //清空住宿类型
+    handleTypesEmpty() {
+      this.$emit("setDataList", {});
+    },
+    //设施
+    handleFacilitys(value) {
+      this.$emit("setDataList", { hotelasset: value });
+    },
+    //清空设施
+    handleFacilitysEmpty() {
+      this.$emit("setDataList", {});
+    },
+    //酒店品牌
+    handleBrands(value) {
+      this.$emit("setDataList", { hotelbrand: value });
+    },
+    //清空品牌
+    handleBrandsEmpty() {
+      this.$emit("setDataList", {});
+    }
+  },
+  mounted() {
+    //获取酒店筛选条件
+    this.$axios({
+      url: "/hotels/options"
+    }).then(res => {
+      const { data } = res.data;
+      // console.log(data)
+      if (res.status == 200) {
+        this.ranks = data.levels;
+        this.types = data.types;
+        this.facilitys = data.assets;
+        this.brands = data.brands;
+      }
+    });
   }
 };
 </script>
@@ -180,6 +166,7 @@ export default {
   font-size: 14px;
 }
 .filter-wrapper {
+  margin-top: 10px;
   height: 38px;
   display: flex;
   align-items: center;
