@@ -2,7 +2,7 @@
   <div>
     <div class="container">
       <div class="input-box">
-        <el-input placeholder="请输入想去的地方 比如：'广州'" v-model="keyword" class="input-with-select">
+        <el-input @change="changKeyWord(keyword)" placeholder="请输入想去的地方 比如：'广州'" v-model="keyword" class="input-with-select">
           <el-button slot="append" icon="el-icon-search" @click="changKeyWord(keyword)"></el-button>
         </el-input>
       </div>
@@ -38,11 +38,11 @@ export default {
   mounted(){
   },
   // 监听输入框的变化
-  watch:{
-    keyword(){
-      this.$store.dispatch("post/getArticleInfo", v)
-    }
-  }
+  // watch:{
+  //   keyword(keyword){
+  //     this.$store.dispatch("post/getArticleInfo",keyword)
+  //   }
+  // }
 };
 </script>
 

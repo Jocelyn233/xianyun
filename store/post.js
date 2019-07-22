@@ -5,6 +5,9 @@ export const state = () => {
         // 渲染到单个页面的列表
         dataList: [],
         total: 0,
+        // 当前页码和分页的默认值
+        currentPage: 1,
+        pageSize: 3,
     }
 }
 
@@ -14,19 +17,38 @@ export const mutations = {
         state.total = data.total
         state.articleList = data.data
         // 遍历文章列表数据 如果图片长度大于3 则等于3 否则等于1
-        state.articleList.forEach((v,i)=>{
+        state.articleList.forEach((v, i) => {
             // console.log(v);
-            if(v.images.length>=3){
-              v.images.length=3
-            }else{
-              v.images.length=1
+            if (v.images.length >= 3) {
+                v.images.length = 3
+            } else {
+                v.images.length = 1
             }
         });
         state.dataList = state.articleList.slice(0, 3)
     },
-    setdataList(state,data){
+    setdataList(state, data) {
         state.total = data.total
         state.dataList = data.data
+    },
+    // 改变页码数时触发
+    changePageSize(state, data) {
+        state.pageSize = data
+        console.log(state.currentPage, state.pageSize);
+        state.dataList = state.articleList.slice(
+            (state.currentPage - 1) * state.pageSize,
+            state.pageSize * state.currentPage
+        );
+    },
+    // 改变当前页时触发
+    changeCurrentPage(state, data) {
+        state.currentPage = data
+        console.log(state.currentPage, state.pageSize);
+        console.log(state.articleList);
+        state.dataList = state.articleList.slice(
+            (state.currentPage - 1) * state.pageSize,
+            state.pageSize * state.currentPage
+        );
     }
 }
 

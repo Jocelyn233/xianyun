@@ -72,6 +72,8 @@
             </div>
           </el-row>
         </div>
+        <!-- 数组没有数据时显示 -->
+        <div v-if="$store.state.post.dataList.length==0">暂无相关文章</div>
       </div>
     </div>
 
@@ -80,9 +82,9 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currentPage"
+        :current-page="$store.state.post.currentPage"
         :page-sizes="[3,5,10, 15]"
-        :page-size="pageSize"
+        :page-size="$store.state.post.pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="$store.state.post.total"
       ></el-pagination>
@@ -94,20 +96,12 @@
 export default {
   data() {
     return {
-      // 当前页码和分页的默认值
-      currentPage: 1,
-      pageSize: 3,
     };
   },
   methods: {
     handleSizeChange(val) {
-      // console.log(`每页 ${val} 条`);
-      this.pageSize=val
-      // 改变store中的数据
-      this.dataList=this.articleList.slice(
-              (this.currentPage - 1) * this.pageSize,
-              this.pageSize * this.currentPage
-          );
+    //  调用mutations的方法 将val传过去
+    this.$store.commit('post/changePageSize',val)
     },
     handleCurrentChange(val) {
       // console.log(`当前页: ${val}`);
