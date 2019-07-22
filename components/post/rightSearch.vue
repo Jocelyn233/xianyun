@@ -20,13 +20,15 @@
 export default {
   data() {
     return {
-      keyword: ""
+      keyword: "",
+      // 文章列表
+      articleList:[],
     };
   },
   methods: {
     handleChangeWord(word) {
       this.keyword = word;
-      // 调用仓库的方法 请求数据
+      // 调用仓库的方法 请求文章列表
     }
   },
   mounted(){
