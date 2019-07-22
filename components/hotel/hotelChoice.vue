@@ -8,7 +8,7 @@
       </el-row>
       <el-row>
         <div class="block">
-          <el-slider v-model="slider" @change='handleSlider'></el-slider>
+          <el-slider v-model="slider" :max="4000" @change='handleSlider'></el-slider>
         </div>
       </el-row>
     </el-col>
