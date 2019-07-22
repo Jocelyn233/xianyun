@@ -15,7 +15,7 @@
           <div v-for="(v,i) in cityList[index].children" :key="i">
             <span class="num">{{i+1}}</span>
             <span @click="changKeyWord(v.city)" class="city">{{v.city}}</span>
-            <span clas="description">{{v.desc}}</span>
+            <span class="description">{{v.desc}}</span>
           </div>
         </el-row>
       </el-row>
@@ -34,8 +34,8 @@ export default {
     };
   },
   methods: {
-    changKeyWord(v){
-      this.$store.commit('post/setKeyWord',v)
+    changKeyWord(v) {
+      this.$store.dispatch("post/getArticleInfo", v)
     }
   },
   mounted() {
@@ -105,6 +105,13 @@ export default {
             cursor: pointer;
           }
         }
+        .description {
+          color: #999;
+          &:hover {
+            text-decoration: underline;
+            cursor: pointer;
+          }
+        }
       }
     }
     &:first-child {
@@ -116,9 +123,7 @@ export default {
     }
   }
 }
-.container .searchItem .recommend-city div[data-v-05f129f3] {
-  color: #999;
-}
+
 .container {
   .recommend-city {
     position: absolute;
