@@ -18,21 +18,24 @@ export default {};
   width: 300px;
   height: 216px;
   padding-right: 36px;
-//   background-color: darkgrey;
+  //   background-color: darkgrey;
   box-sizing: border-box;
   .recommend-city {
     font-size: 19px;
     padding-bottom: 12px;
     border-bottom: 1px solid #ccc;
   }
-  .hr-line{
-      background-color: #ccc;
+  .hr-line {
+    background-color: #ccc;
   }
   .recommend-city-img {
-      height: 174px;
+    height: 174px;
     img {
       width: 100%;
-      margin-top: 8px
+      margin-top: 8px;
+    }
+    &:hover {
+      cursor: pointer;
     }
   }
 }

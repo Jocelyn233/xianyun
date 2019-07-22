@@ -3,7 +3,9 @@
     <el-row type="flex" justify="space-between" class="content-top">
       <div class="content-top-left">推荐攻略</div>
       <div>
-        <el-button type="primary">写游记</el-button>
+        <el-button type="primary">
+          <i class="el-icon-edit"></i> 写游记
+        </el-button>
       </div>
     </el-row>
     <div class="content-bottom">
@@ -42,10 +44,14 @@
         </div>
         <el-row type="flex" justify="space-between">
           <div class="content-ico">
-            <span>北京市</span>
+            <span>
+              <i class="el-icon-location-outline"></i>北京市
+            </span>
             <span>by</span>
-            <span>地球发动机</span>
-            <span>3063</span>
+            <span class="name">地球发动机</span>
+            <span>
+              <i class="el-icon-view"></i>3063
+            </span>
           </div>
           <div class="content-ico-right">30 赞</div>
         </el-row>
@@ -65,15 +71,19 @@
             <div
               class="content"
             >想象一下一个距离 北京 只有2.5小时飞行距离的城市：身处 亚洲 却能感受到十足的欧陆风情——欧式建筑和街道，金发碧眼的路人，正宗的西餐外加只有国内一半售价的帝王蟹可以敞开吃——更难能可贵的是，这里对国人（实质）免签，有直飞航班，低廉的物价，且尚未有太多的游客涉足还保留着原汁原味的传统风情！</div>
-           <el-row type="flex" justify="space-between">
-          <div class="content-ico">
-            <span>北京市</span>
-            <span>by</span>
-            <span>地球发动机</span>
-            <span>3063</span>
-          </div>
-          <div class="content-ico-right">30 赞</div>
-        </el-row>
+            <el-row type="flex" justify="space-between">
+              <div class="content-ico">
+                <span>
+                  <i class="el-icon-location-outline"></i>北京市
+                </span>
+                <span>by</span>
+                <span class="name">地球发动机</span>
+                <span>
+                  <i class="el-icon-view"></i>3063
+                </span>
+              </div>
+              <div class="content-ico-right">30 赞</div>
+            </el-row>
           </div>
         </el-row>
       </div>
@@ -101,7 +111,7 @@ export default {
       currentPage2: 5,
       currentPage3: 5,
       currentPage4: 4
-    }
+    };
   },
   methods: {
     handleSizeChange(val) {
@@ -111,17 +121,17 @@ export default {
       console.log(`当前页: ${val}`);
     }
   },
-  mounted(){
+  mounted() {
     //  获取文章分类
     this.$axios({
-        url:'/postkinds'
+      url: "/postkinds"
     })
-    .then(res=>{
+      .then(res => {
         console.log(res);
-    })
-    .catch(err=>{
+      })
+      .catch(err => {
         console.log(err);
-    })
+      });
   }
 };
 </script>
@@ -177,10 +187,10 @@ export default {
         padding: 20px 0 26px 0;
       }
       .content-ico-right {
-          padding-top: 13px;
-          font-size: 18px;
-          color: #ffa500;
-        }
+        padding-top: 13px;
+        font-size: 18px;
+        color: #ffa500;
+      }
     }
     // 图片小于三张
     .content-bottom-item2 {
@@ -227,6 +237,12 @@ export default {
   }
   .pagination {
     padding: 12px 0 18px 16px;
+  }
+}
+.name {
+  color: #ffa500;
+  &:hover {
+    cursor: pointer;
   }
 }
 </style>

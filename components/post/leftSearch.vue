@@ -1,16 +1,18 @@
 <template>
   <div>
     <div class="container">
-      <el-row type="flex" justify="space-between" 
-      v-for="(item,index) in cityList"
-      :key="index"
-      class="searchItem">
+      <el-row
+        type="flex"
+        justify="space-between"
+        v-for="(item,index) in cityList"
+        :key="index"
+        class="searchItem"
+      >
         <span>{{item.type}}</span>
         <span class="icon">></span>
         <!-- 显示的具体介绍部分 -->
         <el-row type="flex" justify="space-between" class="recommend-city">
-          <div v-for="(v,i) in cityList[index].children"
-          :key="i">
+          <div v-for="(v,i) in cityList[index].children" :key="i">
             <span class="num">{{i+1}}</span>
             <span class="city">{{v.city}}</span>
             <span clas="description">{{v.desc}}</span>
@@ -26,9 +28,9 @@ export default {
   data() {
     return {
       // 城市列表
-      cityList:[],
+      cityList: [],
       // 详细介绍
-      recommendCity:[]
+      recommendCity: []
     };
   },
   methods: {},
@@ -41,7 +43,7 @@ export default {
         // console.log(res);
         const { data } = res.data;
         console.log(data);
-        this.cityList=data
+        this.cityList = data;
       })
       .catch(err => {
         console.log(err);
@@ -65,7 +67,6 @@ export default {
     font-size: 15px;
     //   background-color: cadetblue
     border-top: none;
-    position: relative;
     &:hover {
       > span {
         color: #ffa500;
@@ -80,10 +81,6 @@ export default {
       height: 200px;
       box-sizing: border-box;
       background-color: #fff;
-      position: absolute;
-      left: 256px;
-      top: -1px;
-      z-index: 2;
       flex-direction: column;
       border: 1px solid #ccc;
       div {
@@ -98,6 +95,10 @@ export default {
           font-size: 15px;
           color: orange;
           padding-right: 6px;
+          &:hover {
+            text-decoration: underline;
+            cursor: pointer;
+          }
         }
       }
     }
@@ -112,5 +113,13 @@ export default {
 }
 .container .searchItem .recommend-city div[data-v-05f129f3] {
   color: #999;
+}
+.container {
+  .recommend-city {
+    position: absolute;
+    left: 256px;
+    top: -1px;
+    z-index: 2;
+  }
 }
 </style>
