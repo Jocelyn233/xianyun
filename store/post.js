@@ -1,7 +1,27 @@
-export const state = () => ({
-    list: [1,2,3]
-})
+export const state = () => {
+    return {
+        keywords: ''
+    }
+}
 
 export const mutations = {
-    setData(state,data){}
+    setKeyWord(state, data) {
+        state.keywords = data
+        // console.log(state.keywords);
+    }
+}
+
+export const actions = {
+    // 获取文章列表
+    getArticleInfo(store, date) {
+        this.$axios({
+            url: "/posts",
+            params: {
+                city: date
+            }
+        })
+            .then(res => {
+                console.log(res);
+            })
+    }
 }
