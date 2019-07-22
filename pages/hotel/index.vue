@@ -31,6 +31,18 @@
       <HotelList :data="data" />
       <!-- 分页组件 -->
     </el-row>
+    <el-row>
+      <el-col :span="8" :offset="14">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          background
+          :pager-count="5"
+          layout="prev, pager, next"
+          :total="total"
+        ></el-pagination>
+      </el-col>
+    </el-row>
   </section>
 </template>
 <script>
@@ -46,7 +58,11 @@ export default {
       locationArr: [],
       data: [],
       scenic: [],
-      city: ""
+      city: "",
+      total: 0,
+      //分页
+      pageSize: 10,
+      pageIndex: 1
     };
   },
   components: {
@@ -64,12 +80,16 @@ export default {
       this.$axios({
         url: "/hotels",
         params: {
+          _limit: this.pageSize,
+          _start: (this.pageIndex - 1) * this.pageSize,
           ...this.$route.query
         }
       })
         .then(res => {
           const { data, total } = res.data;
           this.data = data;
+          this.total = total;
+          this.pageIndex = 1;
           const arr = [];
           this.data.map(v => {
             arr.push(v.location);
@@ -89,7 +109,7 @@ export default {
               }
             }).then(res => {
               const { data } = res.data;
-              this.scenic=data[0].scenics;     
+              this.scenic = data[0].scenics;
             });
           }
         });
@@ -129,6 +149,18 @@ export default {
         url: "/hotels",
         query
       });
+    },
+
+    handleSizeChange(val) {
+      // console.log(`每页 ${val} 条`);
+      this.pageSize = val;
+      this.getData();
+    },
+
+    handleCurrentChange(val) {
+      // console.log(`当前页: ${val}`);
+      this.pageIndex = val;
+      this.getData();
     }
   },
   watch: {
