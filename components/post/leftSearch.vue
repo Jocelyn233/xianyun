@@ -8,7 +8,7 @@
         :key="index"
         class="searchItem"
       >
-        <span>{{item.type}}</span>
+        <span > {{item.type}}</span>
         <span class="icon">></span>
         <!-- 显示的具体介绍部分 -->
         <el-row type="flex" justify="space-between" v-if="isShow" class="recommend-city">
@@ -38,8 +38,12 @@ export default {
   methods: {
     changKeyWord(v) {
       this.$store.dispatch("post/getArticleInfo", v);
-      // this.isShow = false;
-    }
+    },
+    // // 点击介绍框出现
+    // recommendShow() {
+    //   this.isShow = true;
+    //   console.log(this.isShow);
+    // }
   },
   mounted() {
     // 发送请求 获取城市菜单列表
@@ -123,6 +127,9 @@ export default {
     .icon {
       font-family: cursive;
       color: #9e9e9e;
+      &:hover{
+        cursor:default
+      }
     }
   }
 }

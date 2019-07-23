@@ -28,7 +28,7 @@ export const mutations = {
         state.dataList = state.articleList.slice(
             (state.currentPage - 1) * state.pageSize,
             state.pageSize * state.currentPage)
-        console.log(state.dataList.length);
+        // console.log(state.dataList.length);
     },
     setdataList(state, data) {
         state.total = data.total
