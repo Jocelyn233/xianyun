@@ -8,7 +8,7 @@
       </el-col>
       <el-col :span="10" style="padding-left: 10px; padding-right: 10px;">
         <h4 class="hotel-cn-name">
-          <a :href="`/hotel/detail?id=${item.id}`" class>{{item.name}}</a>
+          <a :href="`/hotel/hotelDetails?id=${item.id}`" class>{{item.name}}</a>
         </h4>
         <div class="hotel-en-name">
           <span>{{item.alias}}</span>
