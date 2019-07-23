@@ -2,10 +2,10 @@
   <div class="main">
     <!-- 这是面包屑 -->
     <el-breadcrumb separator-class="el-icon-arrow-right" class="mianbao">
-      <el-breadcrumb-item :to="{ path: '/' }">
+      <el-breadcrumb-item :to="{ path: '/hotel' }">
         <strong>酒店</strong>
       </el-breadcrumb-item>
-      <el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/hotel' }">
         <strong>南京酒店</strong>
       </el-breadcrumb-item>
       <el-breadcrumb-item>{{hotelsInfo.name}}</el-breadcrumb-item>
@@ -22,16 +22,20 @@
     <div class="hotel-price">
       <HotelPrice :data="hotelsInfo" />
     </div>
+    <!-- 这是地图展示区 -->
+    <div class="hotel-map">
+      <HotelAddress :data='hotelsInfo' />
+    </div>
     <!-- 这是酒店详情信息部分 -->
     <div class="hotelInfo">
       <InfoData :data="hotelsInfo" />
     </div>
     <!-- 这是评论部分 -->
     <div class="hotel-comment">
-      <HotelComment :data='scores' />
+      <HotelComment :data='scores'/>
     </div>
-    <div class="pLun">
-      <HotelPL />
+    <div class="pLun" >
+      <HotelPL :data='commentList' />
     </div>
   </div>
 </template>
@@ -43,6 +47,8 @@ import HotelPrice from "@/components/hotel/hotelPrice";
 import InfoData from "@/components/hotel/infoData";
 import HotelComment from "@/components/hotel/hotelComment";
 import HotelPL from "@/components/hotel/hotelPL";
+import HotelAddress from "@/components/hotel/hotelAddress";
+
 
 export default {
   data() {
@@ -53,13 +59,15 @@ export default {
         },
         hotellevel: {
           level: ""
-        }
+        },
+        location:{}
       },
       scores: {
         environment: 1,
         product: 1,
         service: 1
-      }
+      },
+      commentList:[]
     };
   },
   components: {
@@ -68,22 +76,30 @@ export default {
     HotelPrice,
     InfoData,
     HotelComment,
-    HotelPL
+    HotelPL,
+    HotelAddress
   },
   mounted() {
+    const {id}=this.$route.query
     this.$axios({
-      url: "/hotels?id=4"
+      url: `/hotels?id=${id}`
       //  params:{
       //    id:1
       //  }
     }).then(res => {
-      console.log(res);
+      // console.log(res);
       const { data } = res.data;
       this.hotelsInfo = data[0];
       this.scores.environment = data[0].scores.environment * 10;
       this.scores.product = data[0].scores.product * 10;
       this.scores.service = data[0].scores.service * 10;
-    });
+    })
+    this.$axios({
+      url:'/hotels/comments'
+    }).then(res=>{
+      // console.log(res)
+      this.commentList=res.data.data
+    })
   }
 };
 </script>
@@ -107,6 +123,10 @@ export default {
 
   .hotel-price {
     margin-top: 50px;
+  }
+  
+  .hotel-map{
+    margin-top:40px;
   }
 
   .hotelInfo {
