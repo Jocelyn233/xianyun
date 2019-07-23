@@ -49,24 +49,14 @@
 
 <script>
 export default {
-  // data () {
-  //   return {
-  //    num:10,
-  //    num2:20,
-  //    num3:30
-  //   }
-  // },
+ 
   props: {
     data:{
       type:Object,
       default:{
       } 
-    }
-
+    },
   },
-  // watch: {
-  //   data:{}
-  // }
 };
 </script>
 

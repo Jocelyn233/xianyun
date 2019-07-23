@@ -22,16 +22,20 @@
     <div class="hotel-price">
       <HotelPrice :data="hotelsInfo" />
     </div>
+    <!-- 这是地图展示区 -->
+    <div class="hotel-map">
+      <HotelAddress :data='hotelsInfo' />
+    </div>
     <!-- 这是酒店详情信息部分 -->
     <div class="hotelInfo">
       <InfoData :data="hotelsInfo" />
     </div>
     <!-- 这是评论部分 -->
     <div class="hotel-comment">
-      <HotelComment :data='scores' />
+      <HotelComment :data='scores'/>
     </div>
-    <div class="pLun">
-      <HotelPL />
+    <div class="pLun" >
+      <HotelPL :data='commentList' />
     </div>
   </div>
 </template>
@@ -43,6 +47,8 @@ import HotelPrice from "@/components/hotel/hotelPrice";
 import InfoData from "@/components/hotel/infoData";
 import HotelComment from "@/components/hotel/hotelComment";
 import HotelPL from "@/components/hotel/hotelPL";
+import HotelAddress from "@/components/hotel/hotelAddress";
+
 
 export default {
   data() {
@@ -53,13 +59,15 @@ export default {
         },
         hotellevel: {
           level: ""
-        }
+        },
+        location:{}
       },
       scores: {
         environment: 1,
         product: 1,
         service: 1
-      }
+      },
+      commentList:[]
     };
   },
   components: {
@@ -68,14 +76,17 @@ export default {
     HotelPrice,
     InfoData,
     HotelComment,
-    HotelPL
+    HotelPL,
+    HotelAddress
   },
   mounted() {
+    const {id}=this.$router.query
+    console.log(id)
     this.$axios({
-      url: "/hotels?id=4"
-      //  params:{
-      //    id:1
-      //  }
+      url: "/hotels",
+       params:{
+         id:id
+       }
     }).then(res => {
       console.log(res);
       const { data } = res.data;
@@ -83,7 +94,13 @@ export default {
       this.scores.environment = data[0].scores.environment * 10;
       this.scores.product = data[0].scores.product * 10;
       this.scores.service = data[0].scores.service * 10;
-    });
+    })
+    this.$axios({
+      url:'/hotels/comments'
+    }).then(res=>{
+      console.log(res)
+      this.commentList=res.data.data
+    })
   }
 };
 </script>
@@ -107,6 +124,10 @@ export default {
 
   .hotel-price {
     margin-top: 50px;
+  }
+  
+  .hotel-map{
+    margin-top:40px;
   }
 
   .hotelInfo {
