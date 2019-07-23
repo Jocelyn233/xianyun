@@ -2,10 +2,10 @@
   <div class="main">
     <!-- 这是面包屑 -->
     <el-breadcrumb separator-class="el-icon-arrow-right" class="mianbao">
-      <el-breadcrumb-item :to="{ path: '/' }">
+      <el-breadcrumb-item :to="{ path: '/hotel' }">
         <strong>酒店</strong>
       </el-breadcrumb-item>
-      <el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/hotel' }">
         <strong>南京酒店</strong>
       </el-breadcrumb-item>
       <el-breadcrumb-item>{{hotelsInfo.name}}</el-breadcrumb-item>
