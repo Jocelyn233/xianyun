@@ -8,14 +8,14 @@
         :key="index"
         class="searchItem"
       >
-        <span>{{item.type}}</span>
+        <span > {{item.type}}</span>
         <span class="icon">></span>
         <!-- 显示的具体介绍部分 -->
-        <el-row type="flex" justify="space-between" class="recommend-city">
+        <el-row type="flex" justify="space-between" v-if="isShow" class="recommend-city">
           <div v-for="(v,i) in cityList[index].children" :key="i">
             <span class="num">{{i+1}}</span>
             <span @click="changKeyWord(v.city)" class="city">{{v.city}}</span>
-            <span clas="description">{{v.desc}}</span>
+            <span class="description">{{v.desc}}</span>
           </div>
         </el-row>
       </el-row>
@@ -30,13 +30,20 @@ export default {
       // 城市列表
       cityList: [],
       // 详细介绍
-      recommendCity: []
+      recommendCity: [],
+      // 控制具体介绍部分的显示与否
+      isShow: true
     };
   },
   methods: {
-    changKeyWord(v){
-      this.$store.commit('post/setKeyWord',v)
-    }
+    changKeyWord(v) {
+      this.$store.dispatch("post/getArticleInfo", v);
+    },
+    // // 点击介绍框出现
+    // recommendShow() {
+    //   this.isShow = true;
+    //   console.log(this.isShow);
+    // }
   },
   mounted() {
     // 发送请求 获取城市菜单列表
@@ -105,6 +112,13 @@ export default {
             cursor: pointer;
           }
         }
+        .description {
+          color: #999;
+          &:hover {
+            text-decoration: underline;
+            cursor: pointer;
+          }
+        }
       }
     }
     &:first-child {
@@ -113,12 +127,13 @@ export default {
     .icon {
       font-family: cursive;
       color: #9e9e9e;
+      &:hover{
+        cursor:default
+      }
     }
   }
 }
-.container .searchItem .recommend-city div[data-v-05f129f3] {
-  color: #999;
-}
+
 .container {
   .recommend-city {
     position: absolute;

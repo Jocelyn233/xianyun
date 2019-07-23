@@ -10,7 +10,11 @@
     </el-row>
     <div class="content-bottom">
       <!-- 底部文章部分 -->
-      <div class="content-bottom-item1" v-for="(item,index) in dataList" :key="index">
+      <div
+        class="content-bottom-item1"
+        v-for="(item,index) in $store.state.post.dataList"
+        :key="index"
+      >
         <!-- 当图片大于三张时显示的内容 -->
         <div v-show="item.images.length>=3">
           <nuxt-link :to="'/post/detail?id='+item.id" class="title">{{item.title}}</nuxt-link>
@@ -36,6 +40,9 @@
                 <i class="el-icon-view"></i>
                 {{item.watch}}
               </span>
+              <div class="avatar" @click="getPersonInfo()">
+                <img src="http://127.0.0.1:1337/assets/images/avatar.jpg" alt />
+              </div>
             </div>
             <div class="content-ico-right">{{item.like||0}} 赞</div>
           </el-row>
@@ -66,12 +73,17 @@
                     <i class="el-icon-view"></i>
                     {{item.watch}}
                   </span>
+                  <div class="avatar" @click="getPersonInfo()">
+                    <img src="http://127.0.0.1:1337/assets/images/avatar.jpg" alt />
+                  </div>
                 </div>
                 <div class="content-ico-right">{{item.like||0}} 赞</div>
               </el-row>
             </div>
           </el-row>
         </div>
+        <!-- 数组没有数据时显示 -->
+        <div v-show="$store.state.post.dataList.length==0">暂无相关文章</div>
       </div>
     </div>
 
@@ -80,11 +92,11 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currentPage"
+        :current-page="$store.state.post.currentPage"
         :page-sizes="[3,5,10, 15]"
-        :page-size="pageSize"
+        :page-size="$store.state.post.pageSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
+        :total="$store.state.post.total"
       ></el-pagination>
     </div>
   </div>
@@ -93,43 +105,24 @@
 <script>
 export default {
   data() {
-    return {
-      // 当前页码和分页的默认值
-      currentPage: 1,
-      pageSize: 3,
-      total: 0,
-      // 总的文章列表
-      articleList: [],
-      // 渲染到单个页面的列表
-      dataList: []
-      // 文章图片集合
-      // imgList: []
-    };
+    return {};
   },
   methods: {
     handleSizeChange(val) {
-      // console.log(`每页 ${val} 条`);
-      this.pageSize=val
-      this.dataList=this.articleList.slice(
-              (this.currentPage - 1) * this.pageSize,
-              this.pageSize * this.currentPage
-          );
+      //  调用mutations的方法 将val传过去
+      this.$store.commit("post/changePageSize", val);
     },
     handleCurrentChange(val) {
       // console.log(`当前页: ${val}`);
-      this.currentPage=val
-      this.dataList=this.articleList.slice(
-              (this.currentPage - 1) * this.pageSize,
-              this.pageSize * this.currentPage
-          );
+      this.$store.commit("post/changeCurrentPage", val);
     },
     // 点击获取用户信息
     getPersonInfo() {
       this.$message.success("个人中心暂未开放...");
     },
     // 跳转到编辑页面
-    goCreatPage(){
-      this.$router.push('/post/create')
+    goCreatPage() {
+      this.$router.push("/post/create");
     }
   },
   mounted() {
@@ -139,20 +132,9 @@ export default {
     })
       .then(res => {
         // console.log(res);
-        const { data } = res.data;
+        const data = res.data;
         this.total = res.data.total;
-        this.articleList = data;
-        this.dataList =this.articleList.slice(0,3);
-        // console.log(data);
-        // 遍历文章列表数据 如果图片长度大于3 则等于3 否则等于1
-        this.articleList.forEach((v,i)=>{
-            console.log(v);
-            if(v.images.length>=3){
-              v.images.length=3
-            }else{
-              v.images.length=1
-            }
-        });
+        this.$store.commit("post/changeDataList", data);
       })
       .catch(err => {
         console.log(err);
@@ -189,9 +171,9 @@ export default {
         display: block;
         font-size: 19px;
         padding: 20px 0;
-         &:hover{
-              color: #ffa500;
-            }
+        &:hover {
+          color: #ffa500;
+        }
       }
       .content {
         display: block;
@@ -216,6 +198,7 @@ export default {
         font-size: 12px;
         color: #a6a6a6;
         padding: 20px 0 26px 0;
+        position: relative;
       }
       .content-ico-right {
         padding-top: 13px;
@@ -245,7 +228,7 @@ export default {
             height: 10px;
             margin: -14px 0 6px 0;
             overflow: hidden;
-            &:hover{
+            &:hover {
               color: #ffa500;
             }
           }
@@ -260,6 +243,7 @@ export default {
             margin-top: -12px;
             font-size: 12px;
             color: #a6a6a6;
+            position: relative;
           }
           .content-ico-right {
             padding-top: 13px;
@@ -277,8 +261,23 @@ export default {
 .name {
   color: #ffa500;
   margin-right: 3px;
+  padding-left: 16px;
   &:hover {
     cursor: pointer;
+  }
+}
+.content-ico .avatar {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  left: 72px;
+  top: 21px;
+  img {
+    width: 100%;
+    height: 100%;
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 </style>
