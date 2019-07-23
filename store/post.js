@@ -8,6 +8,9 @@ export const state = () => {
         // 当前页码和分页的默认值
         currentPage: 1,
         pageSize: 3,
+        // 草稿箱数据
+        draft:{},
+        postInfo:[]
     }
 }
 
@@ -51,6 +54,13 @@ export const mutations = {
             (state.currentPage - 1) * state.pageSize,
             state.pageSize * state.currentPage
         );
+    },
+    updateDraft(state, data){
+      state.draft = data
+    },
+     // 登录数据存储
+     setpostInfo(state,val){
+        state.postInfo = [...val]
     }
 }
 
