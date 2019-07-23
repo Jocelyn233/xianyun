@@ -266,7 +266,7 @@ export default {
                  type: "success"
               })
                 this.$router.push({
-                  path:'/post/detail'
+                  path:'/post'
                 })
              }
            })
