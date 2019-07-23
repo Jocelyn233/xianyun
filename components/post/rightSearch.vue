@@ -2,8 +2,8 @@
   <div>
     <div class="container">
       <div class="input-box">
-        <el-input placeholder="请输入想去的地方 比如：'广州'" v-model="keyword" class="input-with-select">
-          <el-button slot="append" icon="el-icon-search"></el-button>
+        <el-input @change="changKeyWord(keyword)" placeholder="请输入想去的地方 比如：'广州'" v-model="keyword" class="input-with-select">
+          <el-button slot="append" icon="el-icon-search" @click="changKeyWord(keyword)"></el-button>
         </el-input>
       </div>
       <div class="hotwords">
@@ -29,10 +29,20 @@ export default {
     handleChangeWord(word) {
       this.keyword = word;
       // 调用仓库的方法 请求文章列表
+      this.$store.dispatch("post/getArticleInfo", word)
+    },
+    changKeyWord(v) {
+      this.$store.dispatch("post/getArticleInfo", v)
     }
   },
   mounted(){
-  }
+  },
+  // 监听输入框的变化
+  // watch:{
+  //   keyword(keyword){
+  //     this.$store.dispatch("post/getArticleInfo",keyword)
+  //   }
+  // }
 };
 </script>
 

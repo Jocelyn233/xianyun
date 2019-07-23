@@ -16,7 +16,7 @@ export default {};
 <style lang="less" scoped>
 .container {
   width: 300px;
-  height: 229px;
+  height: 236px;
   padding-right: 36px;
   //   background-color: darkgrey;
   box-sizing: border-box;
@@ -32,7 +32,7 @@ export default {};
     height: 174px;
     img {
       width: 100%;
-      margin-top: 8px;
+      margin-top: 10px;
     }
     &:hover {
       cursor: pointer;
