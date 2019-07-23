@@ -85,7 +85,7 @@ export default {
     this.$axios({
       url: "/hotels",
        params:{
-         id:id
+         id:id 
        }
     }).then(res => {
       console.log(res);
