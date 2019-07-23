@@ -11,7 +11,7 @@
         <span>{{item.type}}</span>
         <span class="icon">></span>
         <!-- 显示的具体介绍部分 -->
-        <el-row type="flex" justify="space-between" class="recommend-city">
+        <el-row type="flex" justify="space-between" v-if="isShow" class="recommend-city">
           <div v-for="(v,i) in cityList[index].children" :key="i">
             <span class="num">{{i+1}}</span>
             <span @click="changKeyWord(v.city)" class="city">{{v.city}}</span>
@@ -30,12 +30,15 @@ export default {
       // 城市列表
       cityList: [],
       // 详细介绍
-      recommendCity: []
+      recommendCity: [],
+      // 控制具体介绍部分的显示与否
+      isShow: true
     };
   },
   methods: {
     changKeyWord(v) {
-      this.$store.dispatch("post/getArticleInfo", v)
+      this.$store.dispatch("post/getArticleInfo", v);
+      // this.isShow = false;
     }
   },
   mounted() {

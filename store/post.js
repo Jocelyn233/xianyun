@@ -25,16 +25,19 @@ export const mutations = {
                 v.images.length = 1
             }
         });
-        state.dataList = state.articleList.slice(0, 3)
+        state.dataList = state.articleList.slice(
+            (state.currentPage - 1) * state.pageSize,
+            state.pageSize * state.currentPage)
+        console.log(state.dataList.length);
     },
     setdataList(state, data) {
         state.total = data.total
-        state.dataList = data.data
+        state.dataList = data.el-icon-s-data
     },
     // 改变页码数时触发
     changePageSize(state, data) {
         state.pageSize = data
-        console.log(state.currentPage, state.pageSize);
+        // console.log(state.currentPage, state.pageSize);
         state.dataList = state.articleList.slice(
             (state.currentPage - 1) * state.pageSize,
             state.pageSize * state.currentPage
@@ -43,8 +46,7 @@ export const mutations = {
     // 改变当前页时触发
     changeCurrentPage(state, data) {
         state.currentPage = data
-        console.log(state.currentPage, state.pageSize);
-        console.log(state.articleList);
+        // console.log(state.currentPage, state.pageSize);
         state.dataList = state.articleList.slice(
             (state.currentPage - 1) * state.pageSize,
             state.pageSize * state.currentPage
@@ -64,7 +66,7 @@ export const actions = {
             .then(res => {
                 // console.log(res);
                 store.commit("changeDataList", res.data)
-                console.log(store.state.dataList);
+                // console.log(store.state.dataList);
             })
     }
 }
