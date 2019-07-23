@@ -80,15 +80,14 @@ export default {
     HotelAddress
   },
   mounted() {
-    const {id}=this.$router.query
-    console.log(id)
+    const {id}=this.$route.query
     this.$axios({
-      url: "/hotels",
-       params:{
-         id:id 
-       }
+      url: `/hotels?id=${id}`
+      //  params:{
+      //    id:1
+      //  }
     }).then(res => {
-      console.log(res);
+      // console.log(res);
       const { data } = res.data;
       this.hotelsInfo = data[0];
       this.scores.environment = data[0].scores.environment * 10;
@@ -98,7 +97,7 @@ export default {
     this.$axios({
       url:'/hotels/comments'
     }).then(res=>{
-      console.log(res)
+      // console.log(res)
       this.commentList=res.data.data
     })
   }

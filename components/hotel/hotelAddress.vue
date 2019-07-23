@@ -45,7 +45,7 @@ export default {
       this.$axios({
         url:'https://restapi.amap.com/v3/place/text?keywords=&city=%E5%8D%97%E4%BA%AC&location=118.871811,31.328468&types=%E9%A3%8E%E6%99%AF%E5%90%8D%E8%83%9C&output=json&page=1&offset=10&key=79041dfa1c752f49599e2b507c64da42',
       }).then(res=>{
-        console.log(res)
+        // console.log(res)
         this.sceneryList=res.data.pois
         // console.log(res.data.pois);
       })
@@ -54,7 +54,7 @@ export default {
       this.$axios({
         url:'https://restapi.amap.com/v3/place/text?keywords=&city=%E5%8D%97%E4%BA%AC&location=118.922375,32.101576&types=%E4%BA%A4%E9%80%9A%E8%AE%BE%E6%96%BD%E6%9C%8D%E5%8A%A1&output=json&page=1&offset=10&key=79041dfa1c752f49599e2b507c64da42',
       }).then(res=>{
-        console.log(res)
+        // console.log(res)
         this.platformList=res.data.pois
         // console.log(res.data.pois);
       })
